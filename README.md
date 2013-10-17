@@ -39,3 +39,9 @@ SkillCraft has a cooldown HUD that can be turned on from the "prefs" menu system
 SkillCraft's orignal concept was to create a freeform Warcraft where everyone is on the same level with access to the same skills.  No Races, No leveling, No currency.   We are currently looking into creating maybe a point system so that players can rank against each other in this competitive version of WarCraft.
 
 
+
+
+File Structure
+==============
+
+Lets keep all the function naming system the name.   War3Source has a problem where they have multiple naming structures.  ie.  W3, OnWar3, and War3_.   For SkillCraft we only have either SC_ or On_SC_.
