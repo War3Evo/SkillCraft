@@ -2,11 +2,11 @@ SkillCraft
 ==========
 
 Credit to War3Source Team for producting War3Source:
-------------------------------------------------------------
+
 https://github.com/War3Source/War3Source/graphs/contributors
 
 SkillCraft is derivied from War3Source.
-------------------------------------------------------------
+
 
 Currently TF2 only and very little translation support (if any)
 
