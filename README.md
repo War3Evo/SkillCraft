@@ -1,6 +1,8 @@
 SkillCraft
 ==========
 
+Currently TF2 only and very little translation support (if any)
+
 SkillCraft - What makes a great Race?  That is for you to decide!
 
 
