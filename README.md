@@ -44,7 +44,7 @@ SkillCraft's orignal concept was to create a freeform Warcraft where everyone is
 Structure
 =========
 
-Lets keep all the function naming system the same.   War3Source has a problem where they have multiple naming structures.  ie.  W3, OnWar3, and War3_.   For SkillCraft we only have either SC_ or On_SC_.
+Lets keep all the function naming system the same.   War3Source has a too many naming structures.  ie.  W3, OnWar3, and War3_.   For SkillCraft we only have either SC_ or On_SC_.
 
 * Rename stuff so that other source coders do not have to figure out what it is without having to go thru all the sourcecode.
 
