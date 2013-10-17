@@ -2,7 +2,7 @@ SkillCraft
 ==========
 
 Credit to War3Source Team for producting War3Source:
-SkillCraft is derivied from War3Source.
+SkillCraft is derivied from War3Evo's version of War3Source, which was derivied from War3Source.
 
 
 Currently TF2 only and very little translation support (if any)
