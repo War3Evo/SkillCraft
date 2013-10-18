@@ -20,7 +20,7 @@ public OnPluginStart()
 	Cvar_ChatBlocking=CreateConVar("sc_command_blocking","0","block chat commands from showing up");
 	
 	Cvar_serverowner_steamid=CreateConVar("sc_serverowner_steamid","0","block chat commands from showing up");
-	Cvar_serverclantag=CreateConVar("sc_serverclantag","W3E","Change tag for your special clan chat change and use & to start chat.");
+	Cvar_serverclantag=CreateConVar("sc_serverclantag","-W3E-","Change tag for your special clan chat change and use & to start chat.");
 
 	RegConsoleCmd("say",SkillCraft_SayCommand);
 	RegConsoleCmd("say_team",SkillCraft_TeamSayCommand);
