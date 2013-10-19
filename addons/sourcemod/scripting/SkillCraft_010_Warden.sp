@@ -12,7 +12,7 @@ new String:teleportSound[]="war3source/blinkarrival.mp3";
 
 //skill 1
 new Float:FanOfKnivesTFChanceArr=0.2;
-new const KnivesTFDamage = 25; 
+new const Float:Knives_Damage_Percent_of_Max_Victim_health = 0.05; 
 new const Float:KnivesTFRadius = 300.0;
  
 //skill 3
@@ -68,13 +68,13 @@ public On_SC_LoadSkillOrdered(num)
 	if(num==120)
 	{
 		SKILL_FANOFKNIVES=SC_CreateNewSkill("Fan of Knives","FanOfKnives",
-		"(Passive) 20% chance to activate when attacked\n(Passive) Deals 25 damage in a 300.0 radius around you",
+		"5% chance to activate when attacked\nDeals 5% of max victim health as damage in a 30.0 feet radius around you",
 		talent);
 	}
 	if(num==121)
 	{
 		SKILL_SHADOWSTRIKE=SC_CreateNewSkill("Shadow Strike (Passive)","ShadowStrike",
-		"(Passive) 20% chance to poison an enemy on hit\n(Passive) Deals initial damage and damage over time",
+		"20% chance to poison an enemy on hit\nDeals initial damage and damage over time",
 		ability);
 	}
 	if(num==122)
@@ -379,6 +379,7 @@ public OnSC_TakeDmgBullet(victim,attacker,Float:damage)
 							GetClientAbsOrigin(i,otherVec);
 							if(GetVectorDistance(playerVec,otherVec)<KnivesTFRadius)
 							{
+								Knives_Damage_Percent_of_Max_Victim_health = FloatMul(float(SC_GetMaxHP(victim)),Knives_Damage_Percent_of_Max_Victim_health);
 								if(SC_DealDamage(i,KnivesTFDamage,victim,DMG_BULLET,"knives",SC_DMGORIGIN_SKILL,SC_DMGTYPE_MAGIC))
 								{
 									

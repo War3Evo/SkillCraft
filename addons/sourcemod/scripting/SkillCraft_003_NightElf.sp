@@ -5,6 +5,17 @@
 #include <sdktools>
 #include <sdkhooks>
 
+// Skill Evade
+new Float:skill_evade_chance = 0.03;
+
+new Float:skill_thorns_damage_multiplier = 0.10;
+// anything over 1.0 is the percent of extra damage for trueshot
+new Float:skill_trueshot_modpercent = 1.05;
+
+// for every 1 foot multiply by 10
+new Float:entangle_distance = 600.0;
+new Float:entangle_time=1.25;
+
 new bool:bIsEntangled[MAXPLAYERSCUSTOM];
 
 new bool:Phlogistinator[MAXPLAYERSCUSTOM];
@@ -56,22 +67,22 @@ public On_SC_LoadSkillOrdered(num)
 	if(num==40)
 	{
 		SKILL_EVADE=SC_CreateNewSkill("Evasion","Evasion",
-		"10 percent chance of evading a shot",talent);
+		"3 percent chance of evading a shot",talent);
 	}
 	if(num==41)
 	{
 		SKILL_THORNS=SC_CreateNewSkill("Thorns Aura","ThornsAura",
-		"You deal 20 percent of damage recieved to your attacker",mastery);
+		"You deal 10 percent of damage recieved to your attacker",mastery);
 	}
 	if(num==42)
 	{
 		SKILL_TRUESHOT=SC_CreateNewSkill("Trueshot Aura","TrueshotAura",
-		"Your attacks deal 20 percent more damage\nPhlogistinator messes with your aura and can not trigger this skill.",mastery);
+		"Your attacks deal 5 percent more damage\nPhlogistinator messes with your aura and can not trigger this skill.",mastery);
 	}
 	if(num==43)
 	{
 		ULT_ENTANGLE=SC_CreateNewSkill("Entangling Roots","EntangleRoot",
-		"Bind enemies to the ground,\nrendering them immobile for 0.50/0.75/1.0/1.25 seconds\nDistance of 600 units.",ultimate);
+		"Bind enemies to the ground,\nrendering them immobile for 1.25 seconds\nDistance of 60 feet.",ultimate);
 	}
 }
 
@@ -174,19 +185,17 @@ public OnUltimateCommand(client,bool:pressed,bool:bypass)
 			if(!Silenced(client) && SC_SkillNotInCooldown(client,ULT_ENTANGLE,true))
 			{
 			
-				new Float:distance=600.0;
 				new target; // easy support for both
 				new Float:our_pos[3];
 				GetClientAbsOrigin(client,our_pos);
 		
-				target=SC_GetTargetInViewCone(client,distance,false,23.0,ImmunityCheck);
+				target=SC_GetTargetInViewCone(client,entangle_distance,false,23.0,ImmunityCheck);
 				if(ValidPlayer(target,true))
 				{
 			
 					bIsEntangled[target]=true;
 			
 					SC_SetBuff(target,bNoMoveMode,ULT_ENTANGLE,true);
-					new Float:entangle_time=1.25;
 					CreateTimer(entangle_time,StopEntangle,target);
 					new Float:effect_vec[3];
 					GetClientAbsOrigin(target,effect_vec);
@@ -215,7 +224,7 @@ public OnUltimateCommand(client,bool:pressed,bool:bypass)
 				}
 				else
 				{
-					SC_MsgNoTargetFound(client,distance);
+					SC_MsgNoTargetFound(client,entangle_distance);
 				}
 			}
 		}
@@ -261,7 +270,7 @@ public On_SC_TakeDmgBulletPre(victim,attacker,Float:damage)
 			//if they are not this race thats fine, later check for race
 			if(SC_HasSkill(victim,SKILL_EVADE)) 
 			{
-				if(!Hexed(victim,false) && GetRandomFloat(0.0,1.0)<=0.10 && !SC_HasImmunity(attacker,Immunity_Skills))
+				if(!Hexed(victim,false) && GetRandomFloat(0.0,1.0)<=skill_evade_chance && !SC_HasImmunity(attacker,Immunity_Skills))
 				{
 					
 					SC_FlashScreen(victim,RGBA_COLOR_BLUE);
@@ -307,7 +316,7 @@ public On_SC_TakeDmgBulletPre(victim,attacker,Float:damage)
 				}
 				else if(!SC_HasImmunity(victim,Immunity_Skills) && !Hexed(attacker,false))
 				{
-					SC_DamageModPercent(1.20);
+					SC_DamageModPercent(skill_trueshot_modpercent);
 					SC_FlashScreen(victim,RGBA_COLOR_RED);
 				}
 			}
@@ -326,7 +335,7 @@ public On_SC_TakeDmgAll(victim,attacker,Float:damage)
 			{
 				if(!SC_HasImmunity(attacker,Immunity_Skills))
 				{
-					new damage_i=RoundToFloor(FloatMul(damage,0.20));
+					new damage_i=RoundToFloor(FloatMul(damage,skill_thorns_damage_multiplier));
 					if(damage_i>0)
 					{
 						if(damage_i>40) damage_i=40; // lets not be too unfair ;]
