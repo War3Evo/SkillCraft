@@ -139,7 +139,7 @@ Initialize_SQLTable()
 		{   
 			new String:createtable[3000];
 			Format(createtable,sizeof(createtable),
-			"CREATE TABLE SkillCraft (steamid varchar(64) UNIQUE , name varchar(64),   mastery varchar(16),     talent varchar(16),    ability varchar(16),    ultimate varchar(16),  last_seen int) %s",
+			"CREATE TABLE SkillCraft (steamid varchar(64) UNIQUE , name varchar(64),   mastery varchar(16),     talent varchar(16),    ability varchar(16),    ultimate varchar(16),  last_seen int, total_points int) %s",
 			SC_SQLType:SC_GetVar(hDatabaseType)==SQLType_MySQL?"DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci":"" );
 
 			if(!SQL_FastQueryLogOnError(hDB,createtable))
@@ -315,7 +315,7 @@ SkillCraft_LoadPlayerData(client) //SkillCraft calls this
 		
 		new String:longquery[4000];
 		//Prepare select query for main data
-		Format(longquery,sizeof(longquery),"SELECT mastery,talent,ability,ultimate FROM SkillCraft WHERE steamid='%s'",steamid);
+		Format(longquery,sizeof(longquery),"SELECT mastery,talent,ability,ultimate,total_points FROM SkillCraft WHERE steamid='%s'",steamid);
 		//Pass off to threaded call back at normal prority
 		SQL_TQuery(hDB,T_CallbackSelectPDataMain,longquery,client);
 		
@@ -362,9 +362,9 @@ public T_CallbackSelectPDataMain(Handle:owner,Handle:hndl,const String:error[],a
 			}
 			else{
 				//Get the gold from the query
-				//new cred=SC_SQLPlayerInt(hndl,"gold");
-				//Set the gold for player
-				//SC_SetGold(client,cred);
+				new _total_points=SC_SQLPlayerInt(hndl,"total_points");
+				//Set the total_points for player
+				SC_SetPoints(client,_total_points);
 				//PrintToConsole(client,"[SkillCraft] Setting Gold %d",cred);
 				
 				//new diamonds=SC_SQLPlayerInt(hndl,"diamonds");
@@ -536,7 +536,7 @@ public T_CallbackSelectPDataMain(Handle:owner,Handle:hndl,const String:error[],a
 				
 				new String:longquery[4000];
 				// Main table query
-				Format(longquery,sizeof(longquery),"INSERT INTO SkillCraft (steamid,name,mastery,talent,ability,ultimate) VALUES ('%s','%s','%s','%s','%s','%s')",steamid,szSafeName,short_name_mastery,short_name_talent,short_name_ability,short_name_ultimate);
+				Format(longquery,sizeof(longquery),"INSERT INTO SkillCraft (steamid,name,mastery,talent,ability,ultimate,total_points) VALUES ('%s','%s','%s','%s','%s','%s','%d')",steamid,szSafeName,short_name_mastery,short_name_talent,short_name_ability,short_name_ultimate,0);
 				new Handle:querytrie=CreateTrie();
 				SetTrieString(querytrie,"query",longquery);
 				SQL_TQuery(hDB,T_CallbackInsertPDataMain,longquery,querytrie);
@@ -883,7 +883,10 @@ SC_SavePlayerMainData(client){
 			SC_GetSkillShortname(SC_GetSkill(client,ability),shortname_ability,sizeof(shortname_ability));
 			new String:shortname_ultimate[16];
 			SC_GetSkillShortname(SC_GetSkill(client,ultimate),shortname_ultimate,sizeof(shortname_ultimate));
-			Format(longquery,sizeof(longquery),"UPDATE SkillCraft SET name='%s',mastery='%s',talent='%s',ability='%s',ultimate='%s',last_seen='%d' WHERE steamid = '%s'",szSafeName,shortname_mastery,shortname_talent,shortname_ability,shortname_ultimate,last_seen,steamid);
+			
+			new _total_points=SC_GetPoints(client);
+			
+			Format(longquery,sizeof(longquery),"UPDATE SkillCraft SET name='%s',mastery='%s',talent='%s',ability='%s',ultimate='%s',last_seen='%d',total_points='%d' WHERE steamid = '%s'",szSafeName,shortname_mastery,shortname_talent,shortname_ability,shortname_ultimate,last_seen,_total_points,steamid);
 			new Handle:querytrie=CreateTrie();
 			SetTrieString(querytrie,"query",longquery);
 			SQL_TQuery(hDB,T_CallbackUpdatePDataMain,longquery,querytrie);
