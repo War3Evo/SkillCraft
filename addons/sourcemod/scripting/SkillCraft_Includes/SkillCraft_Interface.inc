@@ -956,12 +956,13 @@ stock bool:SC_IsPlayerXPLoaded(client) {
 stock bool:SC_IsPlayerRaceLoaded(client) {
 	return SC_GetPlayerProp(client,dbRaceSelected);
 }
-//stock SC_SetGold(client, newgold) {
-//	SC_SetPlayerProp(client, PlayerGold, newgold);
-//}
-//stock SC_GetGold(client) {
-//	return SC_GetPlayerProp(client, PlayerGold);
-//}
+
+stock SC_SetPoints(client, newgold) {
+	SC_SetPlayerProp(client, total_points, newgold);
+}
+stock SC_GetPoints(client) {
+	return SC_GetPlayerProp(client, total_points);
+}
 
 stock SC_IsDeveloper(client)
 {

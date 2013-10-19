@@ -19,6 +19,8 @@ enum SC_PlayerProp
 	iMaxHP,
 	bIsDucking,
 	
+	total_points,
+	
 	bool:xpLoaded,
 	bool:SpawnedOnce, //if player has spawned once
 	Float:sqlStartLoadXPTime,
