@@ -149,7 +149,7 @@ public OnPluginStart()
 	//if(!SkillCraft_InitOffset())
 		//SetFailState("[SkillCraft] There was a failure in finding the offsets required.");
 		
-	hLoadWar3CFGEveryMapCvar = CreateConVar("sc_load_war3source_cfg_every_map", "0", "Will Speed up map changes if disabled.");
+	hLoadWar3CFGEveryMapCvar = CreateConVar("sc_load_skillcraft_cfg_every_map", "0", "Will Speed up map changes if disabled.");
 	LoadWar3CFGEveryMap=GetConVarBool(hLoadWar3CFGEveryMapCvar);
 	HookConVarChange(hLoadWar3CFGEveryMapCvar, hLoadWar3CFGEveryMapCvarChanged);
 	
