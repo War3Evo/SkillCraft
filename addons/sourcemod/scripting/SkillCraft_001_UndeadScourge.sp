@@ -21,17 +21,17 @@ public On_SC_LoadSkillOrdered(num)
 	if(num==10)
 	{
 		PrintToServer("skill vampaura");
-		SKILL_LEECH=SC_CreateNewSkill("Vampiric Aura","vampaura","Leech Health\nYou recieve 25% of your damage dealt as Health",talent);
+		SKILL_LEECH=SC_CreateNewSkill("Vampiric Aura","VampAura","Leech Health\nYou recieve 25% of your damage dealt as Health",talent);
 	}
 	if(num==11)
 	{
 		PrintToServer("skill unholyaura");
-		SKILL_SPEED=SC_CreateNewSkill("Unholy Aura","unholyaura","You run 20% faster",talent);	
+		SKILL_SPEED=SC_CreateNewSkill("Unholy Aura","UnholyAura","You run 20% faster",talent);	
 	}
 	if(num==13)
 	{
 		PrintToServer("skill levitate");
-		SKILL_LOWGRAV=SC_CreateNewSkill("Levitation","levitate","You can jump higher\n0.5 less gravity",talent);
+		SKILL_LOWGRAV=SC_CreateNewSkill("Levitation","Levitate","You can jump higher\n0.5 less gravity",talent);
 	}
 	// temporary disabled does not work right
 	//if(num==14)

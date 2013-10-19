@@ -33,25 +33,25 @@ public On_SC_LoadSkillOrdered(num)
 {
 	if(num==80)
 	{
-		SKILL_RED = SC_CreateNewSkill( "Red Laser: Burn", "Red.Laser", "Burn your targets", talent );
+		SKILL_RED = SC_CreateNewSkill( "Red Laser: Burn", "RedLaser", "Burn your targets", talent );
 	}
 	if(num==81)
 	{
-		SKILL_GREEN = SC_CreateNewSkill( "Green Laser: Hex", "Green.Laser",
+		SKILL_GREEN = SC_CreateNewSkill( "Green Laser: Hex", "GreenLaser",
 		"Hex your Targets for 1.0 second (1.25 second cooldown)\nHexing makes players skills not work.", talent);
 	}
 	if(num==82)
 	{
-		SKILL_BLUE = SC_CreateNewSkill( "Blue Laser: Freeze", "Blue.Laser", "Freeze your Targets for 0.75 seconds (10 second cooldown)", talent);
+		SKILL_BLUE = SC_CreateNewSkill( "Blue Laser: Freeze", "BlueLaser", "Freeze your Targets for 0.75 seconds (10 second cooldown)", talent);
 	}
 	if(num==83)
 	{
-		SKILL_YELLOW = SC_CreateNewSkill( "Yellow Laser: ", "Yellow.Laser",
+		SKILL_YELLOW = SC_CreateNewSkill( "Yellow Laser: ", "YellowLaser",
 		"Silence your Targets for 1.0 second (1.25 second cooldown)\nSilence makes players unable to cast spells.", talent );
 	}
 	if(num==84)
 	{
-		ULT_DISCO = SC_CreateNewSkill( "Teleport to random ally", "Teleport.Rand", "Teleport a random ally!", ultimate );
+		ULT_DISCO = SC_CreateNewSkill( "Teleport to random ally", "TeleportRand", "Teleport a random ally!", ultimate );
 	}
 }
 

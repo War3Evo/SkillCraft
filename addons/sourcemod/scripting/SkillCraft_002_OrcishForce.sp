@@ -78,7 +78,7 @@ public On_SC_LoadSkillOrdered(num)
 	}
 	if(num==34)
 	{
-		ULT_LIGHTNING=SC_CreateNewSkill("Chain Lightning","cLightning",
+		ULT_LIGHTNING=SC_CreateNewSkill("Chain Lightning","ChainLightning",
 		"Discharges a bolt of lightning that jumps to\nnearby enemies 150-300 units in range,\ndealing each damage.\nAfter Discharge you cannot attack for 4/3/2/1 seconds.",
 		ultimate);
 	}

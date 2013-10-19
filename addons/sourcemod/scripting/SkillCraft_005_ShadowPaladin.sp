@@ -56,17 +56,17 @@ public On_SC_LoadSkillOrdered(num)
 {
 	if(num==60)
 	{
-		SKILL_HEALINGWAVE=SC_CreateNewSkill("Healing Wave","Healing.Wave",
+		SKILL_HEALINGWAVE=SC_CreateNewSkill("Healing Wave","HealingWave",
 		"Heal teammates around you (8hp/s)",talent);
 	}
 	if(num==60)
 	{
-		SKILL_RECARN_WARD=SC_CreateNewSkill("Healing Ward","Healing.Ward",
+		SKILL_RECARN_WARD=SC_CreateNewSkill("Healing Ward","HealingWard",
 		"Use +ability to make healing wards!\nBe strategic, ward heals both teams!",ability);
 	}
 	if(num==60)
 	{
-		ULT_VOODOO=SC_CreateNewSkill("Big Bad Voodoo","Big.Bad.VD",
+		ULT_VOODOO=SC_CreateNewSkill("Big Bad Voodoo","BigBadVoodoo",
 		"You are invulnerable from physical attacks for 2.0 seconds",ultimate);
 	}
 

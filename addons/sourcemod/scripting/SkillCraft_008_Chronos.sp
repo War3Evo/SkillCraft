@@ -81,7 +81,7 @@ public On_SC_LoadSkillOrdered(num)
 {	
 	if(num==140)
 	{
-		SKILL_LEAP=SC_CreateNewSkill("Time Leap","Time.Leap",
+		SKILL_LEAP=SC_CreateNewSkill("Time Leap","TimeLeap",
 		"Leap in the direction you are moving (auto on jump)",talent);
 	}
 	if(num==141)
@@ -91,12 +91,12 @@ public On_SC_LoadSkillOrdered(num)
 	}
 	if(num==142)
 	{
-		SKILL_TIMELOCK=SC_CreateNewSkill("Time Lock","Time Lock",
+		SKILL_TIMELOCK=SC_CreateNewSkill("Time Lock","TimeLock",
 		"Chance to stun your enemy",mastery);
 	}
 	if(num==143)
 	{
-		ULT_SPHERE=SC_CreateNewSkill("Chronosphere","Chronosphere",
+		ULT_SPHERE=SC_CreateNewSkill("Chronosphere","ChronoSphere",
 		"Rip space and time to trap enemy.\nTrapped victims cannot move and can only deal/receive melee damage,\nSphere protects chornos from outside damage.\nIt lasts 3/3.5/4/4.5 seconds",ultimate);
 	}
 }

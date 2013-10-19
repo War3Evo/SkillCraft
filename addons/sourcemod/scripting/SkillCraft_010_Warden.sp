@@ -67,13 +67,13 @@ public On_SC_LoadSkillOrdered(num)
 {
 	if(num==120)
 	{
-		SKILL_FANOFKNIVES=SC_CreateNewSkill("Fan of Knives","Fan.of.Knives",
+		SKILL_FANOFKNIVES=SC_CreateNewSkill("Fan of Knives","FanOfKnives",
 		"(Passive) 20% chance to activate when attacked\n(Passive) Deals 25 damage in a 300.0 radius around you",
 		talent);
 	}
 	if(num==121)
 	{
-		SKILL_SHADOWSTRIKE=SC_CreateNewSkill("Shadow Strike (Passive)","Shadow.Strike",
+		SKILL_SHADOWSTRIKE=SC_CreateNewSkill("Shadow Strike (Passive)","ShadowStrike",
 		"(Passive) 20% chance to poison an enemy on hit\n(Passive) Deals initial damage and damage over time",
 		ability);
 	}
@@ -85,7 +85,7 @@ public On_SC_LoadSkillOrdered(num)
 	}
 	if(num==123)
 	{
-		SKILL_PUSH = SC_CreateNewSkill("Force Staff","Force.Staff",
+		SKILL_PUSH = SC_CreateNewSkill("Force Staff","ForceStaff",
 		"(+ability) Pushes enemies away from you in a large radius\n(Passive) Does not respect skill immunity\n(Passive) 50% chance to push enemies damaged by fan of knives at 50% power\nif you have Fan of Knifes talent.",
 		ability);
 	}
