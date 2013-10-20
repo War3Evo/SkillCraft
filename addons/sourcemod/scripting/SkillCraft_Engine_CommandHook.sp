@@ -579,6 +579,10 @@ bool:Internal_SkillCraft_SayCommand(client,String:arg1[256])
 		SC_ShowBuffs(client);
 		return returnblocking;
 	}
+	else if(CommandCheck(arg1,"points"))
+	{
+		SC_ChatMessage(client,"You have {green}%d {default}points.",SC_GetPoints(client));
+	}
 	else if(CommandCheck(arg1,"scversion"))
 	{
 		new String:version[64];

@@ -957,8 +957,8 @@ stock bool:SC_IsPlayerRaceLoaded(client) {
 	return SC_GetPlayerProp(client,dbRaceSelected);
 }
 
-stock SC_SetPoints(client, newgold) {
-	SC_SetPlayerProp(client, total_points, newgold);
+stock SC_SetPoints(client, newpoints) {
+	SC_SetPlayerProp(client, total_points, newpoints);
 }
 stock SC_GetPoints(client) {
 	return SC_GetPlayerProp(client, total_points);

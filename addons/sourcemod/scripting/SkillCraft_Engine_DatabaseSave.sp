@@ -41,6 +41,8 @@ public bool:Init_SC_NativesForwards()
 
 public OnPluginStart()
 {
+	RegAdminCmd("drop_main_database_table",SkillCraft_DropTable,ADMFLAG_ROOT,"Do not use, unless you must!");
+	
 	m_SaveXPConVar=CreateConVar("sc_var_savexp","1");
 	SC_SetVar(hSaveEnabledCvar,m_SaveXPConVar);
 
@@ -52,6 +54,28 @@ public OnPluginStart()
 	g_On_SC_PlayerAuthedHandle=CreateGlobalForward("On_SC_PlayerAuthed",ET_Ignore,Param_Cell,Param_Cell);
 
 	CreateTimer(GetConVarFloat(m_AutosaveTime),DoAutosave);
+}
+
+public Action:SkillCraft_DropTable(client,args)
+{
+	if(hDB==INVALID_HANDLE)
+	{
+		SQL_LockDatabase(hDB);
+		PrintToServer("[SkillCraft] Dropping TABLE SkillCraft and recreating it");
+		PrintToServer("[SkillCraft] drop_main_database_table was used!");
+		PrintToChat(client,"You must now change map or restart server.");
+		SQL_FastQueryLogOnError(hDB,"DROP TABLE SkillCraft");
+		
+		new String:createtable[3000];
+		Format(createtable,sizeof(createtable),
+		"CREATE TABLE SkillCraft (steamid varchar(64) UNIQUE , name varchar(64),   mastery varchar(16),     talent varchar(16),    ability varchar(16),    ultimate varchar(16),  last_seen int, total_points int) %s",
+		SC_SQLType:SC_GetVar(hDatabaseType)==SQLType_MySQL?"DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci":"" );
+		if(!SQL_FastQueryLogOnError(hDB,createtable))
+		{
+			SetFailState("[SkillCraft] ERROR in the creation of the SQL table SkillCraft.");
+		}
+		SQL_UnlockDatabase(hDB);
+	}
 }
 
 public Native_SC_SaveXP(Handle:plugin,numParams)
@@ -134,6 +158,13 @@ Initialize_SQLTable()
 		//main table
 		new Handle:query=SQL_Query(hDB,"SELECT * from SkillCraft LIMIT 1");
 		
+		//if(query!=INVALID_HANDLE) //table exists
+		//{
+			//PrintToServer("[SkillCraft] Dropping TABLE SkillCraft and recreating it");
+			//PrintToServer("[SkillCraft] Not normal, this is a debug procedure.");
+			//SQL_FastQueryLogOnError(hDB,"DROP TABLE SkillCraft");
+		//}
+		
 		
 		if(query==INVALID_HANDLE)
 		{   
@@ -141,18 +172,37 @@ Initialize_SQLTable()
 			Format(createtable,sizeof(createtable),
 			"CREATE TABLE SkillCraft (steamid varchar(64) UNIQUE , name varchar(64),   mastery varchar(16),     talent varchar(16),    ability varchar(16),    ultimate varchar(16),  last_seen int, total_points int) %s",
 			SC_SQLType:SC_GetVar(hDatabaseType)==SQLType_MySQL?"DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci":"" );
+			
+			PrintToServer("CREATE TABLE LINE 176");
 
 			if(!SQL_FastQueryLogOnError(hDB,createtable))
 			{
 				SetFailState("[SkillCraft] ERROR in the creation of the SQL table SkillCraft.");
 			}
+			query=SQL_Query(hDB,"SELECT * from SkillCraft LIMIT 1");
+		}
+		
+		// add if not exists
+		//query=SQL_Query(hDB,"SELECT total_points from SkillCraft LIMIT 1");
+		if(query==INVALID_HANDLE)
+		{
+			SetFailState("invalid handle to data, line 191.");
 		}
 		else
-		{	
-			CloseHandle(query);
+		{
+			new dummyfield;
+			PrintToServer("DUMMYFIELD 194");
+			
+			if(!SQL_FieldNameToNum(query, "total_points" , dummyfield))
+			{
+				AddColumn(hDB,"total_points","int","SkillCraft");
+				PrintToServer("ADD COLUMN TOTAL_POINTS");
+			}
 		}
-	
-		
+
+		CloseHandle(query);
+		PrintToServer("CLOSEHANDLE QUERY");
+
 		///NEW DATABASE STRUCTURE
 		/*
 		query=SQL_Query(hDB,"SELECT * from SkillCraft_racedata1 LIMIT 1");
@@ -340,6 +390,7 @@ public T_CallbackSelectPDataMain(Handle:owner,Handle:hndl,const String:error[],a
 		return;
 	}
 	
+
 	if(hndl==INVALID_HANDLE)
 	{
 		//Well the database is fucked up
@@ -365,6 +416,7 @@ public T_CallbackSelectPDataMain(Handle:owner,Handle:hndl,const String:error[],a
 				new _total_points=SC_SQLPlayerInt(hndl,"total_points");
 				//Set the total_points for player
 				SC_SetPoints(client,_total_points);
+				PrintToServer("total points = %d",_total_points);
 				//PrintToConsole(client,"[SkillCraft] Setting Gold %d",cred);
 				
 				//new diamonds=SC_SQLPlayerInt(hndl,"diamonds");
@@ -885,6 +937,7 @@ SC_SavePlayerMainData(client){
 			SC_GetSkillShortname(SC_GetSkill(client,ultimate),shortname_ultimate,sizeof(shortname_ultimate));
 			
 			new _total_points=SC_GetPoints(client);
+			PrintToServer("SAVING POINTS: %d",_total_points);
 			
 			Format(longquery,sizeof(longquery),"UPDATE SkillCraft SET name='%s',mastery='%s',talent='%s',ability='%s',ultimate='%s',last_seen='%d',total_points='%d' WHERE steamid = '%s'",szSafeName,shortname_mastery,shortname_talent,shortname_ability,shortname_ultimate,last_seen,_total_points,steamid);
 			new Handle:querytrie=CreateTrie();
