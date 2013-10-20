@@ -379,8 +379,8 @@ public OnSC_TakeDmgBullet(victim,attacker,Float:damage)
 							GetClientAbsOrigin(i,otherVec);
 							if(GetVectorDistance(playerVec,otherVec)<KnivesTFRadius)
 							{
-								Knives_Damage_Percent_of_Max_Victim_health = FloatMul(float(SC_GetMaxHP(victim)),Knives_Damage_Percent_of_Max_Victim_health);
-								if(SC_DealDamage(i,KnivesTFDamage,victim,DMG_BULLET,"knives",SC_DMGORIGIN_SKILL,SC_DMGTYPE_MAGIC))
+								new Damage_Percent_of_Max_Victim_health = RoundToCeil(FloatMul(float(SC_GetMaxHP(victim)),Knives_Damage_Percent_of_Max_Victim_health));
+								if(SC_DealDamage(i,Damage_Percent_of_Max_Victim_health,victim,DMG_BULLET,"knives",SC_DMGORIGIN_SKILL,SC_DMGTYPE_MAGIC))
 								{
 									
 									SC_FlashScreen(i,RGBA_COLOR_RED);
